@@ -128,4 +128,39 @@ demo$RIDEXPRG <- factor(
 
 # Supplements -------------------------------------------------------------
 
+# read in dataset
+supp <- read_xpt('DSQTOT_L.xpt')
+
+## set factors ------------------------------------------------------------
+
+supp$DSD010 <- factor(
+  supp$DSD010,
+  levels = c(1, 2, 7, 9),
+  labels = c(
+    'Yes',
+    'No',
+    'Refused',
+    'Don\'t know'
+  )
+)
+
+supp$DSD010AN <- factor(
+  supp$DSD010AN,
+  levels = c(1, 2, 7, 9),
+  labels = c(
+    'Yes',
+    'No',
+    'Refused',
+    'Don\'t know'
+  )
+)
+
+## clean numeric variables ---------------------------------------------
+# The following variables are a mix of numeric and categorical information.
+# e.g. 0 to 30 are actual values, 77 = 'Refused', 99 = 'Dont Know'. 
+# Will handle the categorical values as missing.
+
+supp$DSDCOUNT[supp$DSDCOUNT > 30] <- NA_real_
+
+supp$DSDANCNT[supp$DSDANCNT > 3] <- NA_real_
 
