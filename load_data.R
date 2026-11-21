@@ -1,25 +1,38 @@
 # This script reads data to objects and does some baseline cleaning
 library(haven)
 library(tidyverse)
+install.packages('labelled')
+library(labelled)
+
+factorize <- function(var, levels, labels){
+  var_lab <- var_label(var)
+  var <- factor(
+    var,
+    levels = levels,
+    labels = labels
+  )
+  var_label(var) <- var_lab
+  return(var)
+}
 
 # Demographics ------------------------------------------------------------
 # read in dataset
 demo <- read_xpt('DEMO_L.xpt')
 
 ## set factors ------------------------------------------------------------
-demo$RIDSTATR <- factor(
+demo$RIDSTATR <- factorize(
   demo$RIDSTATR,
   levels = c(1, 2),
   labels = c('Interviewed only', 'Both interviewed and MEC examined')
 )
 
-demo$RIAGENDR <- factor(
+demo$RIAGENDR <- factorize(
   demo$RIAGENDR,
   levels = c(1, 2),
   labels = c('Male', 'Female')
 )
 
-demo$RIDRETH1 <- factor(
+demo$RIDRETH1 <- factorize(
   demo$RIDRETH1,
   levels = c(1:5),
   labels = c(
@@ -31,7 +44,7 @@ demo$RIDRETH1 <- factor(
   )
 )
 
-demo$RIDRETH3 <- factor(
+demo$RIDRETH3 <- factorize(
   demo$RIDRETH3,
   levels = c(1, 2, 3, 4, 6, 7),
   labels = c(
@@ -44,7 +57,7 @@ demo$RIDRETH3 <- factor(
   )
 )
 
-demo$RIDEXMON <- factor(
+demo$RIDEXMON <- factorize(
   demo$RIDEXMON,
   levels = c(1, 2),
   labels = c(
@@ -53,7 +66,7 @@ demo$RIDEXMON <- factor(
   )
 )
 
-demo$DMQMILIZ <- factor(
+demo$DMQMILIZ <- factorize(
   demo$DMQMILIZ,
   levels = c(1, 2, 7, 9),
   labels = c(
@@ -64,7 +77,7 @@ demo$DMQMILIZ <- factor(
   )
 )
 
-demo$DMDBORN4 <- factor(
+demo$DMDBORN4 <- factorize(
   demo$DMDBORN4,
   levels = c(1, 2, 77, 99),
   labels = c(
@@ -75,7 +88,7 @@ demo$DMDBORN4 <- factor(
   )
 )
 
-demo$DMDYRUSR <- factor(
+demo$DMDYRUSR <- factorize(
   demo$DMDYRUSR,
   levels = c(1:6, 77, 99),
   labels = c(
@@ -90,7 +103,7 @@ demo$DMDYRUSR <- factor(
   )
 )
 
-demo$DMDEDUC2 <- factor(
+demo$DMDEDUC2 <- factorize(
   demo$DMDEDUC2,
   levels = c(1:5, 7, 9),
   labels = c(
@@ -104,7 +117,7 @@ demo$DMDEDUC2 <- factor(
   )
 )
 
-demo$DMDMARTZ <- factor(
+demo$DMDMARTZ <- factorize(
   demo$DMDMARTZ,
   levels = c(1:3, 77, 99),
   labels = c(
@@ -116,7 +129,7 @@ demo$DMDMARTZ <- factor(
   )
 )
 
-demo$RIDEXPRG <- factor(
+demo$RIDEXPRG <- factorize(
   demo$RIDEXPRG,
   levels = c(1:3),
   labels = c(
@@ -133,7 +146,7 @@ supp <- read_xpt('DSQTOT_L.xpt')
 
 ## set factors ------------------------------------------------------------
 
-supp$DSD010 <- factor(
+supp$DSD010 <- factorize(
   supp$DSD010,
   levels = c(1, 2, 7, 9),
   labels = c(
@@ -144,7 +157,7 @@ supp$DSD010 <- factor(
   )
 )
 
-supp$DSD010AN <- factor(
+supp$DSD010AN <- factorize(
   supp$DSD010AN,
   levels = c(1, 2, 7, 9),
   labels = c(
