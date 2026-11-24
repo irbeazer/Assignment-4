@@ -1,7 +1,7 @@
 # This script reads data to objects and does some baseline cleaning
 library(haven)
 library(tidyverse)
-install.packages('labelled')
+#install.packages('labelled')
 library(labelled)
 
 factorize <- function(var, levels, labels){
