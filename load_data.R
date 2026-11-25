@@ -17,9 +17,16 @@ factorize <- function(var, levels, labels){
 
 # Demographics ------------------------------------------------------------
 # read in dataset
-demo <- read_xpt('DEMO_L.xpt')
+demo_orig <- read_xpt('DEMO_L.xpt')
+#select variables needed for app
+demo <- demo_orig %>% select(
+  SEQN, RIDSTATR, RIAGENDR, RIDAGEYR, RIDRETH3, DMDEDUC2, DMDMARTZ,
+  RIDEXPRG, DMDHHSIZ, INDFMPIR
+)
 
-## set factors ------------------------------------------------------------
+## clean variables ----
+
+## set factors ----
 demo$RIDSTATR <- factorize(
   demo$RIDSTATR,
   levels = c(1, 2),
