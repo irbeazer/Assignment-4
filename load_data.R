@@ -113,3 +113,7 @@ supp$DSD010 <- factorize(
   )
 )
 
+# Join Data ---------------------------------------------------------------
+
+dat <- right_join(demo, supp)
+rm('demo_orig', 'demo', 'supp_orig', 'supp', 'factorize')
