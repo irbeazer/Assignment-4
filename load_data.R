@@ -91,38 +91,25 @@ demo$RIDEXPRG <- factorize(
 # Supplements -------------------------------------------------------------
 
 # read in dataset
-supp <- read_xpt('DSQTOT_L.xpt')
+supp_orig <- read_xpt('DSQTOT_L.xpt')
+# select variables needed for app
+supp <- supp_orig %>% select(
+  -c(WTDRD1, DSDANCNT, DSD010AN, DSQTFDFE)
+)
+## clean variables ----
+# set values "refused" and "don't know" as missing, since we will handle that
+# information the same
+supp$DSDCOUNT[supp$DSDCOUNT > 30] <- NA_real_
+supp$DSD010[supp$DSD010 > 2] <- NA_real_
 
-## set factors ------------------------------------------------------------
+## set factors ----
 
 supp$DSD010 <- factorize(
   supp$DSD010,
-  levels = c(1, 2, 7, 9),
+  levels = c(1, 2),
   labels = c(
     'Yes',
-    'No',
-    'Refused',
-    'Don\'t know'
+    'No'
   )
 )
-
-supp$DSD010AN <- factorize(
-  supp$DSD010AN,
-  levels = c(1, 2, 7, 9),
-  labels = c(
-    'Yes',
-    'No',
-    'Refused',
-    'Don\'t know'
-  )
-)
-
-## clean numeric variables ---------------------------------------------
-# The following variables are a mix of numeric and categorical information.
-# e.g. 0 to 30 are actual values, 77 = 'Refused', 99 = 'Dont Know'. 
-# Will handle the categorical values as missing.
-
-supp$DSDCOUNT[supp$DSDCOUNT > 30] <- NA_real_
-
-supp$DSDANCNT[supp$DSDANCNT > 3] <- NA_real_
 
