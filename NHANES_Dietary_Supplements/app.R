@@ -2,6 +2,10 @@
 # Libraries ---------------------------------------------------------------
 
 library(shiny)
+library(tidyverse)
+
+# load data
+source('load_data.R')
 
 # Define UI for application -----------------------------------------------
 ui <- fluidPage(
